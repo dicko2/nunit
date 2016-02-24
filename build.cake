@@ -634,7 +634,7 @@ void BuildProjectCF(string projectPath, string configuration)
         // Use MSBuild
         MSBuild(projectPath, new MSBuildSettings()
             .SetConfiguration(configuration)
-			.SetMSBuildPlatform(MSBuildPlatform.Automatic)
+			.SetMSBuildPlatform(MSBuildPlatform.x86)
             .SetVerbosity(Verbosity.Minimal)
             .SetNodeReuse(false)
             .UseToolVersion(MSBuildToolVersion.VS2008)
