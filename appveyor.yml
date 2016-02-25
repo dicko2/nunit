@@ -2,6 +2,10 @@ branches:
   except:
     - /travis-.*/
 
+install:
+  ps: |
+        Import-Module '.\build\appveyor-tool.ps1'
+
 before_build:
   - nuget restore nunit.sln
 
