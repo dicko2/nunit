@@ -1,5 +1,5 @@
 Param(
-    [string]$Script = "build.cake",
+    [string]$Script = "build\build.cake",
     [string]$Target = "Default",
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
