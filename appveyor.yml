@@ -6,7 +6,7 @@ before_build:
   - nuget restore nunit.sln
 
 build_script: 
-  - ps: .\build.ps1 -Target "Appveyor"
+  - ps: .\build\build.ps1 -Target "Appveyor"
   
 artifacts:
 - path: package\*.nupkg

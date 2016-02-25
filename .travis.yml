@@ -5,5 +5,5 @@ mono:
   - 3.2.8
 
 script: 
-  - ./build.sh --target "Travis"
+  - ./build/build.sh --target "Travis"
     
