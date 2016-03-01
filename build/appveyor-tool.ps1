@@ -110,4 +110,8 @@ function RegistryWorkAround
     {
         throw "Registry path " + $registryPath + " not set to correct value, please check logs"
     }
+    else
+    {
+        Progress("Regsitrty update ok to value " + (Get-ItemProperty -Path $registryPath -Name $Name).ProductDir)
+    }
 }
