@@ -183,6 +183,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{4897FF6C
 		build\build.sh = build\build.sh
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{C28C9931-DC1F-426D-AACF-7D1FE0445FDA}"
+	ProjectSection(SolutionItems) = preProject
+		build\tools\packages.config = build\tools\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -479,6 +484,7 @@ Global
 		{0F18F7A5-87CA-41E0-ACB2-A13C68D6CC5B} = {32405F86-07E7-41A7-94EB-2AD6B290ED07}
 		{8CDC481D-DB17-4145-9963-9E895C29CBC5} = {32405F86-07E7-41A7-94EB-2AD6B290ED07}
 		{4897FF6C-D074-4523-A03B-524E7526E229} = {49D441DF-39FD-4F4D-AECA-86CF8EFE23AF}
+		{C28C9931-DC1F-426D-AACF-7D1FE0445FDA} = {4897FF6C-D074-4523-A03B-524E7526E229}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = src\NUnitFramework\tests\nunitlite.tests-2.0.csproj
