@@ -95,7 +95,7 @@ function RegistryWorkAround
     ## Parameter name: path1
     $registryPath = "HKLM:\SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS"
     $Name = "ProductDir"
-    $value = "c:\Program Files\Microsoft Visual Studio 9.0\"
+    $value = "C:\Program Files (x86)\Microsoft Visual Studio 9.0"
     
     IF(!(Test-Path $registryPath))
     {
