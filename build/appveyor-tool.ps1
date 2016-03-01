@@ -37,13 +37,14 @@ Function Bootstrap {
 Function InstallCFTools {
   [CmdletBinding()]
   Param()
-    $url= "https://github.com/dicko2/CompactFrameworkBuildBins/blob/master/NETCFSetupv35.msi";
+   $url= "https://github.com/dicko2/CompactFrameworkBuildBins/raw/master/NETCFSetupv35.msi";
     Progress ("Downloading NETCFSetupv35 from: " + $url)
-    Exec { bash -c ("curl --silent -o NETCFSetupv35.msi -L " + $url) }
+    Invoke-WebRequest -Uri $url -OutFile NETCFSetupv35.msi
     
-    $url= "https://github.com/dicko2/CompactFrameworkBuildBins/blob/master/NETCFv35PowerToys.msi";
+    $url= "https://github.com/dicko2/CompactFrameworkBuildBins/raw/master/NETCFv35PowerToys.msi";
     Progress ("Downloading NETCFv35PowerToys from: " + $url)
-    Exec { bash -c ("curl --silent -o NETCFv35PowerToys.msi -L " + $url) }
+    Invoke-WebRequest -Uri $url -OutFile NETCFv35PowerToys.msi
+    
     Get-ChildItem -Path C:\Windows\Microsoft.NET -Filter Microsoft.CompactFramework.Common.targets -Recurse
     dir C:\Windows\Microsoft.NET\Framework\v3.5\
     dir C:\Windows\Microsoft.NET\Framework64\v3.5\
