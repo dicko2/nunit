@@ -18,16 +18,20 @@ Function Exec
 
 Function Bootstrap {
   [CmdletBinding()]
-  Param()
+    Param()
 
-  Progress "Bootstrap: Start"
+    Progress "Bootstrap: Start"
 
-  Progress "Adding GnuWin32 tools to PATH"
-  $env:PATH = "C:\Program Files (x86)\Git\bin;" + $env:PATH
+    if(!(Test-Administrator)) 
+    {
+        throw "Current executing user is not an administrator, please check your settings and try again."
+    }  
+    Progress "Adding GnuWin32 tools to PATH"
+    $env:PATH = "C:\Program Files (x86)\Git\bin;" + $env:PATH
 
-  InstallCFTools
+    InstallCFTools
 
-  Progress "Bootstrap: Done"
+    Progress "Bootstrap: Done"
 }
 
 Function InstallCFTools {
@@ -73,4 +77,10 @@ Function Progress
     $ProgressMessage = '== ' + (Get-Date) + ': ' + $Message
 
     Write-Host $ProgressMessage -ForegroundColor Magenta
+}
+
+function Test-Administrator  
+{  
+    $user = [Security.Principal.WindowsIdentity]::GetCurrent();
+    (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
 }
