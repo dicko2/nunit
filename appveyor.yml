@@ -7,9 +7,6 @@ install:
         Import-Module '.\build\appveyor-tool.ps1'
         Bootstrap
         
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-        
 before_build:
   - nuget restore nunit.sln
 

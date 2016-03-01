@@ -45,10 +45,6 @@ Function InstallCFTools {
     Progress ("Downloading NETCFv35PowerToys from: " + $url)
     Invoke-WebRequest -Uri $url -OutFile NETCFv35PowerToys.msi
     
-    Get-ChildItem -Path C:\Windows\Microsoft.NET -Filter Microsoft.CompactFramework.Common.targets -Recurse
-    dir C:\Windows\Microsoft.NET\Framework\v3.5\
-    dir C:\Windows\Microsoft.NET\Framework64\v3.5\
-    
     Progress("Running NETCFSetupv35 installer")
   
     $msi = @("NETCFSetupv35.msi","NETCFv35PowerToys.msi")
