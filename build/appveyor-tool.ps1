@@ -106,5 +106,8 @@ function RegistryWorkAround
     New-ItemProperty -Path $registryPath -Name $name -Value $value `
         -PropertyType String -Force | Out-Null
     }
-
+    If(!((Get-ItemProperty -Path $registryPath -Name $Name).ProductDir -eq "C:\Program Files (x86)\Microsoft Visual Studio 9.0"))
+    {
+        throw "Registry path " + $registryPath + " not set to correct value, please check logs"
+    }
 }
