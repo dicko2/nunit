@@ -92,26 +92,30 @@ function RegistryWorkAround
     ## see above link for work around for error 
     ## The "AddHighDPIResource" task failed unexpectedly.
     ## System.ArgumentNullException: Value cannot be null.
-    ## Parameter name: path1
-    $registryPath = "HKLM:\SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS"
+    ## Parameter name: path1 
+    $registryPaths = {"HKLM:\SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS","HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\9.0\Setup\VS"}
+    ## not last reply in forum post about needing the entry in WOW is why there is two paths
     $Name = "ProductDir"
     $value = "C:\Program Files (x86)\Microsoft Visual Studio 9.0"
     
-    IF(!(Test-Path $registryPath))
+    foreach($registryPath in $registryPaths)
     {
-        New-Item -Path $registryPath -Force | Out-Null
+        If(!(Test-Path $registryPath))
+        {
+            New-Item -Path $registryPath -Force | Out-Null
+            }
+        If(!(Test-Path $registryPath+"\"+$Name))
+        {
+        New-ItemProperty -Path $registryPath -Name $name -Value $value `
+            -PropertyType String -Force | Out-Null
         }
-    IF(!(Test-Path $registryPath+"\"+$Name))
-    {
-    New-ItemProperty -Path $registryPath -Name $name -Value $value `
-        -PropertyType String -Force | Out-Null
-    }
-    If(!((Get-ItemProperty -Path $registryPath -Name $Name).ProductDir -eq "C:\Program Files (x86)\Microsoft Visual Studio 9.0"))
-    {
-        throw "Registry path " + $registryPath + " not set to correct value, please check logs"
-    }
-    else
-    {
-        Progress("Regsitrty update ok to value " + (Get-ItemProperty -Path $registryPath -Name $Name).ProductDir)
+        If(!((Get-ItemProperty -Path $registryPath -Name $Name).ProductDir -eq "C:\Program Files (x86)\Microsoft Visual Studio 9.0"))
+        {
+            throw "Registry path " + $registryPath + " not set to correct value, please check logs"
+        }
+        else
+        {
+            Progress("Regsitrty update ok to value " + (Get-ItemProperty -Path $registryPath -Name $Name).ProductDir)
+        }                           
     }
 }
