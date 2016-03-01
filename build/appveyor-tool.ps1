@@ -65,6 +65,7 @@ Function InstallCFTools {
     {
         throw "Compact framework files not found after install, install may have failed, please check logs."
     }
+    RegistryWorkAround
 }
 
 Function Progress
@@ -83,4 +84,27 @@ function Test-Administrator
 {  
     $user = [Security.Principal.WindowsIdentity]::GetCurrent();
     (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
+}
+
+function RegistryWorkAround
+{
+    ## http://community.sharpdevelop.net/forums/t/10548.aspx
+    ## see above link for work around for error 
+    ## The "AddHighDPIResource" task failed unexpectedly.
+    ## System.ArgumentNullException: Value cannot be null.
+    ## Parameter name: path1
+    $registryPath = "HKLM:\SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS"
+    $Name = "ProductDir"
+    $value = "c:\Program Files\Microsoft Visual Studio 9.0\"
+    
+    IF(!(Test-Path $registryPath))
+    {
+        New-Item -Path $registryPath -Force | Out-Null
+        }
+    IF(!(Test-Path $registryPath+"\"+$Name))
+    {
+    New-ItemProperty -Path $registryPath -Name $name -Value $value `
+        -PropertyType String -Force | Out-Null
+    }
+
 }
