@@ -5,7 +5,8 @@ branches:
 install:
   ps: |
         Import-Module '.\build\appveyor-tool.ps1'
-
+        Bootstrap
+        
 before_build:
   - nuget restore nunit.sln
 
