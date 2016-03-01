@@ -93,7 +93,7 @@ function RegistryWorkAround
     ## The "AddHighDPIResource" task failed unexpectedly.
     ## System.ArgumentNullException: Value cannot be null.
     ## Parameter name: path1 
-    $registryPaths = {"HKLM:\SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS","HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\9.0\Setup\VS"}
+    $registryPaths = @("HKLM:\SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS","HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\9.0\Setup\VS")
     ## not last reply in forum post about needing the entry in WOW is why there is two paths
     $Name = "ProductDir"
     $value = "C:\Program Files (x86)\Microsoft Visual Studio 9.0"
@@ -103,7 +103,7 @@ function RegistryWorkAround
         If(!(Test-Path $registryPath))
         {
             New-Item -Path $registryPath -Force | Out-Null
-            }
+        }
         If(!(Test-Path $registryPath+"\"+$Name))
         {
         New-ItemProperty -Path $registryPath -Name $name -Value $value `
