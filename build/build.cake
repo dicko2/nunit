@@ -39,7 +39,8 @@ var AllFrameworks = IsRunningOnWindows() ? WindowsFrameworks : LinuxFrameworks;
 // DEFINE RUN CONSTANTS
 //////////////////////////////////////////////////////////////////////
 
-var PROJECT_DIR = Context.Environment.WorkingDirectory.FullPath + "/../";
+var buildPath = Context.Environment.WorkingDirectory.FullPath;
+var PROJECT_DIR = buildPath.Substring(0,buildPath.Length-5);
 var PACKAGE_DIR = PROJECT_DIR + "package/";
 var BIN_DIR = PROJECT_DIR + "bin/" + configuration + "/";
 var IMAGE_DIR = PROJECT_DIR + "images/";
@@ -273,10 +274,10 @@ Task("TestConsole")
 
 var RootFiles = new FilePath[]
 {
-	"LICENSE.txt",
-	"NOTICES.txt",
-	"CHANGES.txt", 
-	"nunit.ico"
+	PROJECT_DIR + "LICENSE.txt",
+	PROJECT_DIR + "NOTICES.txt",
+	PROJECT_DIR + "CHANGES.txt", 
+	PROJECT_DIR + "nunit.ico"
 };
 
 var BinFiles = new FilePath[]
@@ -355,7 +356,6 @@ Task("CreateImage")
 		var imageBinDir = currentImageDir + "bin/";
 
 		CleanDirectory(currentImageDir);
-
 		CopyFiles(RootFiles, currentImageDir);
 
 		CreateDirectory(imageBinDir);
@@ -417,45 +417,45 @@ Task("PackageNuGet")
 		var currentImageDir = IMAGE_DIR + "NUnit-" + packageVersion + "/";
 
 		CreateDirectory(PACKAGE_DIR);
-		NuGetPack("nuget/nunit.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunit.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR
 		});
-		NuGetPack("nuget/nunitSL.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunitSL.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR
 		});
-		NuGetPack("nuget/nunitlite.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunitlite.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR
 		});
-		NuGetPack("nuget/nunitliteSL.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunitliteSL.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR
 		});
-		NuGetPack("nuget/nunit.console.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunit.console.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR,
 			NoPackageAnalysis = true
 		});
-		NuGetPack("nuget/nunit.runners.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunit.runners.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR,
 			NoPackageAnalysis = true
 		});
-		NuGetPack("nuget/nunit.engine.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunit.engine.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
@@ -469,7 +469,7 @@ Task("PackageMsi")
   .WithCriteria(IsRunningOnWindows)
 	.Does(() =>
 	{
-        MSBuild("install/master/nunit.wixproj", new MSBuildSettings()
+        MSBuild(PROJECT_DIR + "install/master/nunit.wixproj", new MSBuildSettings()
 			.WithTarget("Rebuild")
             .SetConfiguration(configuration)
 			.WithProperty("PackageVersion", packageVersion)
@@ -495,13 +495,13 @@ Task("PackageCF")
 
 		Zip(currentImageDir, File(ZIP_PACKAGE_CF), zipFiles);
 
-		NuGetPack("nuget/nunitCF.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunitCF.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
 			OutputDirectory = PACKAGE_DIR
 		});
-		NuGetPack("nuget/nunitLiteCF.nuspec", new NuGetPackSettings()
+		NuGetPack(PROJECT_DIR + "nuget/nunitLiteCF.nuspec", new NuGetPackSettings()
 		{
 			Version = packageVersion,
 			BasePath = currentImageDir,
