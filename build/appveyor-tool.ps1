@@ -41,12 +41,22 @@ Function InstallCFTools {
     Progress ("Downloading NETCFv35PowerToys from: " + $url)
     Exec { bash -c ("curl --silent -o NETCFv35PowerToys.msi -L " + $url) }
   
-    Progress "Running NETCFSetupv35 installer"
+    Progress("Running NETCFSetupv35 installer")
   
     $msi = @("NETCFSetupv35.msi","NETCFv35PowerToys.msi")
     foreach ($msifile in $msi) 
     {
-    Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" -ArgumentList "/i `"$msifile`" /qn /norestart" -Wait -WorkingDirectory $pwd
+    Progress("Installing msi " + $msifile )
+    Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" -ArgumentList "/i `"$msifile`" /qn /norestart" -Wait -WorkingDirectory $pwd  -RedirectStandardOutput stdout.txt -RedirectStandardError stderr.txt
+    
+    $OutputText = get-content stdout.txt
+    Progress($OutputText)
+    $OutputText = get-content stderr.txt
+    Progress($OutputText) 
+    }
+    if(!Test-Path("C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.CompactFramework.CSharp.targets"))
+    {
+        throw "Compact framework files not found after install, isntall may have failed, please check logs."
     }
 }
 
