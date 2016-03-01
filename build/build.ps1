@@ -9,7 +9,7 @@ Param(
     [switch]$WhatIf
 )
 
-$TOOLS_DIR = Join-Path $PSScriptRoot "../tools"
+$TOOLS_DIR = Join-Path $PSScriptRoot "tools"
 $NUGET_EXE = Join-Path $TOOLS_DIR "nuget.exe"
 $CAKE_EXE = Join-Path $TOOLS_DIR "Cake/Cake.exe"
 
@@ -50,6 +50,7 @@ if (!(Test-Path $CAKE_EXE)) {
 }
 
 # Start Cake
+Write-Host "Starting Cake"
 Invoke-Expression "$CAKE_EXE `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseDryRun $UseExperimental"
 Write-Host
 exit $LASTEXITCODE
