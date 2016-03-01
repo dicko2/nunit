@@ -20,6 +20,9 @@
     </FormFactorID>
     <IntermediateOutputPath>obj\$(Configuration)\netcf-3.5\</IntermediateOutputPath>
   </PropertyGroup>
+<PropertyGroup>
+  <HighDPIResAware>1</HighDPIResAware>
+ </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
