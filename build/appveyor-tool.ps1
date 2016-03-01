@@ -46,17 +46,20 @@ Function InstallCFTools {
     $msi = @("NETCFSetupv35.msi","NETCFv35PowerToys.msi")
     foreach ($msifile in $msi) 
     {
+    if(!(Test-Path($msi))
+    {
+        throw "MSI files are not present, please check logs."
+    }
     Progress("Installing msi " + $msifile )
     Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" -ArgumentList "/i `"$msifile`" /qn /norestart" -Wait -WorkingDirectory $pwd  -RedirectStandardOutput stdout.txt -RedirectStandardError stderr.txt
-    
     $OutputText = get-content stdout.txt
     Progress($OutputText)
     $OutputText = get-content stderr.txt
     Progress($OutputText) 
     }
-    if(!Test-Path("C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.CompactFramework.CSharp.targets"))
+    if(!(Test-Path("C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.CompactFramework.CSharp.targets"))
     {
-        throw "Compact framework files not found after install, isntall may have failed, please check logs."
+        throw "Compact framework files not found after install, install may have failed, please check logs."
     }
 }
 
