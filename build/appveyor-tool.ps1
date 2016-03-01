@@ -44,7 +44,7 @@ Function InstallCFTools {
     $url= "https://github.com/dicko2/CompactFrameworkBuildBins/blob/master/NETCFv35PowerToys.msi";
     Progress ("Downloading NETCFv35PowerToys from: " + $url)
     Exec { bash -c ("curl --silent -o NETCFv35PowerToys.msi -L " + $url) }
-  
+    dir C:\Windows\Microsoft.NET\Framework\v3.5\
     Progress("Running NETCFSetupv35 installer")
   
     $msi = @("NETCFSetupv35.msi","NETCFv35PowerToys.msi")
